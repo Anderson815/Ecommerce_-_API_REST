@@ -15,7 +15,7 @@ public class ClienteModelResource {
     @Column(length = 35, nullable = false)
     private String nome;
     // ser único
-    @Column(length = 35, nullable = false)
+    @Column(length = 35, nullable = false, unique = true)
     private String email;
     @Column(length = 20, nullable = false)
     private String senha;
