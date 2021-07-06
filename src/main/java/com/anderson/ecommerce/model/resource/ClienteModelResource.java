@@ -14,10 +14,12 @@ public class ClienteModelResource {
 
     @Column(length = 35, nullable = false)
     private String nome;
+    // ser único
     @Column(length = 35, nullable = false)
     private String email;
     @Column(length = 20, nullable = false)
     private String senha;
+    // ser char
     @Column(length = 11, nullable = false)
     private String telefone;
 
