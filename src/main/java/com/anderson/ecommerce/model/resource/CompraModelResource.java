@@ -3,6 +3,7 @@ package com.anderson.ecommerce.model.resource;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "compra")
@@ -20,6 +21,9 @@ public class CompraModelResource {
 
     @ManyToOne
     private ClienteModelResource cliente;
+
+    @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL)
+    private List<ItemModelResource> itens;
 
     //Get e Set
 
@@ -61,5 +65,13 @@ public class CompraModelResource {
 
     public void setCliente(ClienteModelResource cliente) {
         this.cliente = cliente;
+    }
+
+    public List<ItemModelResource> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<ItemModelResource> itens) {
+        this.itens = itens;
     }
 }

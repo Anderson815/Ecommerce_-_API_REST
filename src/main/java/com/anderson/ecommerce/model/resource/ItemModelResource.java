@@ -19,6 +19,9 @@ public class ItemModelResource {
     @ManyToOne
     private ProdutoModelResource produto;
 
+    @ManyToOne
+    private CompraModelResource compra;
+
     //Get e Set
 
     public int getId() {
@@ -51,5 +54,13 @@ public class ItemModelResource {
 
     public void setProduto(ProdutoModelResource produto) {
         this.produto = produto;
+    }
+
+    public CompraModelResource getCompra() {
+        return compra;
+    }
+
+    public void setCompra(CompraModelResource compra) {
+        this.compra = compra;
     }
 }
