@@ -1,10 +1,8 @@
 package com.anderson.ecommerce.model.resource;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "produto")
@@ -23,6 +21,9 @@ public class ProdutoModelResource {
     private BigDecimal preco;
     @Column(nullable = false)
     private int estoque;
+
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
+    private List<ItemModelResource> itens;
 
     //Get e Set
 
@@ -72,5 +73,13 @@ public class ProdutoModelResource {
 
     public void setEstoque(int estoque) {
         this.estoque = estoque;
+    }
+
+    public List<ItemModelResource> getItens() {
+        return itens;
+    }
+
+    public void setItens(List<ItemModelResource> itens) {
+        this.itens = itens;
     }
 }

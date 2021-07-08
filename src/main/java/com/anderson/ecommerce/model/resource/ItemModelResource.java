@@ -16,6 +16,9 @@ public class ItemModelResource {
     @Column(nullable = false)
     private BigDecimal preco_total;
 
+    @ManyToOne
+    private ProdutoModelResource produto;
+
     //Get e Set
 
     public int getId() {
@@ -40,5 +43,13 @@ public class ItemModelResource {
 
     public void setPreco_total(BigDecimal preco_total) {
         this.preco_total = preco_total;
+    }
+
+    public ProdutoModelResource getProduto() {
+        return produto;
+    }
+
+    public void setProduto(ProdutoModelResource produto) {
+        this.produto = produto;
     }
 }
