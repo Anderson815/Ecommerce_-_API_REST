@@ -1,9 +1,6 @@
 package com.anderson.ecommerce.model.resource;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -20,6 +17,9 @@ public class CompraModelResource {
     private BigDecimal valor;
     @Column(nullable = false)
     private boolean finalizado;
+
+    @ManyToOne
+    private ClienteModelResource cliente;
 
     //Get e Set
 
@@ -53,5 +53,13 @@ public class CompraModelResource {
 
     public void setFinalizado(boolean finalizado) {
         this.finalizado = finalizado;
+    }
+
+    public ClienteModelResource getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(ClienteModelResource cliente) {
+        this.cliente = cliente;
     }
 }

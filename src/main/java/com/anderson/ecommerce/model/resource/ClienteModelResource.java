@@ -1,9 +1,7 @@
 package com.anderson.ecommerce.model.resource;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "cliente")
@@ -23,7 +21,8 @@ public class ClienteModelResource {
     @Column(length = 11, nullable = false)
     private String telefone;
 
-    //private List<CompraModelResource> compras;
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private List<CompraModelResource> compras;
 
     //Get e Set
 
@@ -65,5 +64,13 @@ public class ClienteModelResource {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public List<CompraModelResource> getCompras() {
+        return compras;
+    }
+
+    public void setCompras(List<CompraModelResource> compras) {
+        this.compras = compras;
     }
 }
