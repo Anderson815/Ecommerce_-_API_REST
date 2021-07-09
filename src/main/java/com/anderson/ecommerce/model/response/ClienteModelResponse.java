@@ -17,6 +17,8 @@ public class ClienteModelResponse {
     @JsonIgnoreProperties("cliente")
     private List<CompraModelResource> compras;
 
+    //Get e Set
+
     public String getId() {
         return id;
     }
