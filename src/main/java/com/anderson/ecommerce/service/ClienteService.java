@@ -5,7 +5,9 @@ import com.anderson.ecommerce.model.resource.ClienteModelResource;
 import com.anderson.ecommerce.model.response.ClienteModelResponse;
 import com.anderson.ecommerce.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ClienteService {
 
     @Autowired
