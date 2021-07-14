@@ -52,7 +52,7 @@ public class ContaServiceTest{
         String id = "a";
 
         //Simulação do repositório
-        when(clienteRepository.findById("a"))
+        when(clienteRepository.findById(id))
                 .thenReturn(Optional.of(this.clienteResource));
 
         //teste
