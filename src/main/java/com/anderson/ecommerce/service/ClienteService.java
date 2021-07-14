@@ -1,5 +1,6 @@
 package com.anderson.ecommerce.service;
 
+import com.anderson.ecommerce.exceptions.NotFoundException;
 import com.anderson.ecommerce.model.resource.ClienteModelResource;
 import com.anderson.ecommerce.model.response.ClienteModelResponse;
 import com.anderson.ecommerce.repository.ClienteRepository;
@@ -16,7 +17,7 @@ public class ClienteService {
 
     //Métodos auxiliares
     private ClienteModelResource obterCliente(String id){
-        return this.repository.findById(id).get(); //substituire o get
+        return this.repository.findById(id).orElseThrow(() -> new NotFoundException("cliente", id)); //substituire o get
     }
 
     private ClienteModelResponse clienteParaResposta(ClienteModelResource clienteResource){
