@@ -24,7 +24,7 @@ import javax.annotation.security.RunAs;
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
-public class ContaServiceTest{
+public class ClienteServiceTest {
 
     @Mock
     private ClienteRepository clienteRepository;

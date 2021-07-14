@@ -22,7 +22,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(ClienteController.class)
-public class ContaControllerTest {
+public class ClienteControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
