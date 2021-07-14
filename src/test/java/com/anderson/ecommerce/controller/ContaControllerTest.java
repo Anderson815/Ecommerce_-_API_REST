@@ -34,6 +34,8 @@ public class ContaControllerTest {
 
     @BeforeEach
     public void clienteResponse(){
+        this.clienteResponse = new ClienteModelResponse();
+
         this.clienteResponse.setId("a");
         this.clienteResponse.setNome("Anderson");
         this.clienteResponse.setEmail("anderson@email.com");
