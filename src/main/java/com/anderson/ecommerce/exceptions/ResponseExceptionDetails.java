@@ -9,6 +9,15 @@ public class ResponseExceptionDetails {
     private String erro;
     private String mensagem;
 
+    //Construtor
+
+    public ResponseExceptionDetails(Date data_hora, int cod, String erro, String mensagem) {
+        this.data_hora = data_hora;
+        this.cod = cod;
+        this.erro = erro;
+        this.mensagem = mensagem;
+    }
+
     //Get e Set
 
     public Date getData_hora() {
