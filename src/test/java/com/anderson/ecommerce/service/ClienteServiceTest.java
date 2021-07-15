@@ -98,11 +98,11 @@ public class ClienteServiceTest {
         listaAtual.add(clienteResource2);
 
         //Simulação
-        when(clienteRepository.findById(clienteResource.getId()))
-                .thenReturn(Optional.of(clienteResource));
-
-        when(clienteRepository.findById(clienteResource2.getId()))
-                .thenReturn(Optional.of(clienteResource2));
+//        when(clienteRepository.findById(clienteResource.getId()))
+//                .thenReturn(Optional.of(clienteResource));
+//
+//        when(clienteRepository.findById(clienteResource2.getId()))
+//                .thenReturn(Optional.of(clienteResource2));
 
         when(clienteRepository.findAll())
                 .thenReturn(listaAtual);

@@ -7,6 +7,7 @@ import com.anderson.ecommerce.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,6 +20,16 @@ public class ClienteService {
         return this.clienteParaResposta(this.obterCliente(id));
     }
 
+    public List<ClienteModelResponse> getClientes() {
+
+        List<ClienteModelResponse> listaClienteResponse = new ArrayList<>();
+
+        for(ClienteModelResource clienteResource : repository.findAll()){
+            listaClienteResponse.add(this.clienteParaResposta(clienteResource));
+        }
+
+        return listaClienteResponse;
+    }
     //Métodos auxiliares
     private ClienteModelResource obterCliente(String id){
         return this.repository.findById(id).orElseThrow(() -> new NotFoundException("cliente", id)); //substituire o get
@@ -38,7 +49,5 @@ public class ClienteService {
         return clienteResponse;
     }
 
-    public List<ClienteModelResponse> getClientes() {
-        return null;
-    }
+
 }
