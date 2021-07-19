@@ -1,6 +1,7 @@
 package com.anderson.ecommerce.service;
 
 import com.anderson.ecommerce.exceptions.NotFoundException;
+import com.anderson.ecommerce.model.request.ClienteModelRequest;
 import com.anderson.ecommerce.model.resource.ClienteModelResource;
 import com.anderson.ecommerce.model.response.ClienteModelResponse;
 import com.anderson.ecommerce.repository.ClienteRepository;
@@ -50,4 +51,7 @@ public class ClienteService {
     }
 
 
+    public ClienteModelResponse createCliente(ClienteModelRequest clienteRequest) {
+        return null;
+    }
 }

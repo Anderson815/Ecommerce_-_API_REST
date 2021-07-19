@@ -1,26 +1,24 @@
 package com.anderson.ecommerce.service;
 
 
+import com.anderson.ecommerce.exceptions.CreateException;
 import com.anderson.ecommerce.exceptions.NotFoundException;
+import com.anderson.ecommerce.model.request.ClienteModelRequest;
 import com.anderson.ecommerce.model.resource.ClienteModelResource;
 import com.anderson.ecommerce.model.response.ClienteModelResponse;
 import com.anderson.ecommerce.repository.ClienteRepository;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.function.Executable;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 
-import javax.annotation.security.RunAs;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -98,11 +96,6 @@ public class ClienteServiceTest {
         listaAtual.add(clienteResource2);
 
         //Simulação
-//        when(clienteRepository.findById(clienteResource.getId()))
-//                .thenReturn(Optional.of(clienteResource));
-//
-//        when(clienteRepository.findById(clienteResource2.getId()))
-//                .thenReturn(Optional.of(clienteResource2));
 
         when(clienteRepository.findAll())
                 .thenReturn(listaAtual);
@@ -114,6 +107,47 @@ public class ClienteServiceTest {
         assertEquals(clienteResource.getEmail(), listaClienteAtual.get(0).getEmail());
         assertEquals(clienteResource2.getEmail(), listaClienteAtual.get(1).getEmail());
         assertEquals(2, listaAtual.size());
+    }
+
+    //Testes do método createCliente()
+    @Test
+    @DisplayName("createCliente() com sucesso")
+    public void testCreateClienteComSucesso(){
+        //Parâmetro
+        ClienteModelRequest clienteRequest = new ClienteModelRequest();
+        clienteRequest.setNome("Anderson");
+        clienteRequest.setEmail("anderson@email.com");
+        clienteRequest.setSenha("123456");
+        clienteRequest.setTelefone("15987654321");
+
+        //Simulação
+        when(clienteRepository.existsByEmail(clienteRequest.getEmail()))
+                .thenReturn(false);
+
+        //Teste
+        ClienteModelResponse clienteResponse = clienteService.createCliente(clienteRequest);
+        assertNotNull(clienteResponse);
+        assertNotEquals("", clienteResponse.getId());
+        verify(clienteRepository).save(any());
+    }
+
+    @Test
+    @DisplayName("createCliente() falha, pois já existe cliente com o e-mail informado")
+    public void testCreateClienteFalhaEmail(){
+        //Parâmetro
+        ClienteModelRequest clienteRequest = new ClienteModelRequest();
+        clienteRequest.setNome("Anderson");
+        clienteRequest.setEmail("anderson@email.com");
+        clienteRequest.setSenha("123456");
+        clienteRequest.setTelefone("15987654321");
+
+        //Simulação
+        when(clienteRepository.existsByEmail(clienteRequest.getEmail()))
+                .thenReturn(true);
+
+        //Teste
+        CreateException erro = assertThrows(CreateException.class, () -> clienteService.createCliente(clienteRequest));
+        assertEquals("Cliente não pode ser criado: uma com o e-mail informado já foi cadastrado", erro.getMessage());
     }
 
 }
