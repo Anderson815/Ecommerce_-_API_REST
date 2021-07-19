@@ -1,5 +1,6 @@
 package com.anderson.ecommerce.service;
 
+import com.anderson.ecommerce.exceptions.CreateException;
 import com.anderson.ecommerce.exceptions.NotFoundException;
 import com.anderson.ecommerce.model.request.ClienteModelRequest;
 import com.anderson.ecommerce.model.resource.ClienteModelResource;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ClienteService {
@@ -31,6 +33,23 @@ public class ClienteService {
 
         return listaClienteResponse;
     }
+
+    public ClienteModelResponse createCliente(ClienteModelRequest clienteRequest) {
+
+        if(this.repository.existsByEmail(clienteRequest.getEmail())) throw new CreateException("Cliente", "uma conta com o e-mail informado já foi cadastrado");
+
+        ClienteModelResource cliente = new ClienteModelResource();
+        cliente.setNome(clienteRequest.getNome());
+        cliente.setEmail(clienteRequest.getEmail());
+        cliente.setSenha(clienteRequest.getSenha());
+        cliente.setTelefone(clienteRequest.getTelefone());
+        cliente.setId(UUID.randomUUID().toString());
+
+        repository.save(cliente);
+
+        return this.clienteParaResposta(cliente);
+    }
+
     //Métodos auxiliares
     private ClienteModelResource obterCliente(String id){
         return this.repository.findById(id).orElseThrow(() -> new NotFoundException("cliente", id)); //substituire o get
@@ -51,7 +70,5 @@ public class ClienteService {
     }
 
 
-    public ClienteModelResponse createCliente(ClienteModelRequest clienteRequest) {
-        return null;
-    }
+
 }

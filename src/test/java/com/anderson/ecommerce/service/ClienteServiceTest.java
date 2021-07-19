@@ -147,7 +147,7 @@ public class ClienteServiceTest {
 
         //Teste
         CreateException erro = assertThrows(CreateException.class, () -> clienteService.createCliente(clienteRequest));
-        assertEquals("Cliente não pode ser criado: uma com o e-mail informado já foi cadastrado", erro.getMessage());
+        assertEquals("Cliente não pode ser criado: uma conta com o e-mail informado já foi cadastrado", erro.getMessage());
     }
 
 }
