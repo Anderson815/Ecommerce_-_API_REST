@@ -50,6 +50,10 @@ public class ClienteService {
         return this.clienteParaResposta(cliente);
     }
 
+    public ClienteModelResponse updateCliente(String id, ClienteModelRequest clienteRequest) {
+        return null;
+    }
+
     //Métodos auxiliares
     private ClienteModelResource obterCliente(String id){
         return this.repository.findById(id).orElseThrow(() -> new NotFoundException("cliente", id)); //substituire o get
@@ -68,7 +72,5 @@ public class ClienteService {
 
         return clienteResponse;
     }
-
-
 
 }

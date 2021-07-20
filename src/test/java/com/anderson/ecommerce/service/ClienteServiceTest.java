@@ -3,6 +3,7 @@ package com.anderson.ecommerce.service;
 
 import com.anderson.ecommerce.exceptions.CreateException;
 import com.anderson.ecommerce.exceptions.NotFoundException;
+import com.anderson.ecommerce.exceptions.UpdateException;
 import com.anderson.ecommerce.model.request.ClienteModelRequest;
 import com.anderson.ecommerce.model.resource.ClienteModelResource;
 import com.anderson.ecommerce.model.response.ClienteModelResponse;
@@ -150,4 +151,50 @@ public class ClienteServiceTest {
         assertEquals("Cliente não pode ser criado: uma conta com o e-mail informado já foi cadastrado", erro.getMessage());
     }
 
+    //Testes do método updateCliente()
+    @Test
+    @DisplayName("updateCliente() com sucesso")
+    public void testUpdateClienteComSucesso(){
+        //parâmetro
+        ClienteModelRequest clienteRequest = new ClienteModelRequest();
+        clienteRequest.setNome("Anderson Correia");
+        clienteRequest.setEmail("anderson@email.com"); //o e-mail é o único não alterado
+        clienteRequest.setSenha("123");
+        clienteRequest.setTelefone("15123456789");
+
+        String id = "a";
+
+        //Simulação
+        when(clienteRepository.findById(id))
+                .thenReturn(Optional.of(this.clienteResource));
+
+        //Teste
+        ClienteModelResponse clienteAtual = clienteService.updateCliente(id, clienteRequest);
+        assertEquals(clienteRequest.getNome(), clienteAtual.getNome());
+        assertEquals(clienteRequest.getSenha(), clienteAtual.getSenha());
+        assertEquals(clienteRequest.getTelefone(), clienteAtual.getTelefone());
+        assertEquals(clienteResource.getEmail(), clienteAtual.getEmail()); //Não pode alterar o e-mail
+        assertEquals(clienteResource.getId(), clienteAtual.getId()); // Não pode alterar o ID
+    }
+
+    @Test
+    @DisplayName("updateCliente() falha, pois não pode alterar o e-mail")
+    public void testUpdateClienteFalhaEmail(){
+        //Parâmetro
+        ClienteModelRequest clienteRequest = new ClienteModelRequest();
+        clienteRequest.setNome("Anderson Correia");
+        clienteRequest.setEmail("anderson123@email.com");
+        clienteRequest.setSenha("123");
+        clienteRequest.setTelefone("15123456789");
+
+        String id = "a";
+
+        //Simulação
+        when(clienteRepository.findById(id))
+                .thenReturn(Optional.of(clienteResource));
+
+        //Teste
+        UpdateException erro = assertThrows(UpdateException.class, () -> clienteService.updateCliente(id, clienteRequest));
+        assertEquals("Cliente não pode ser atualizado: o e-mail não pode ser alterado", erro.getMessage());
+    }
 }
