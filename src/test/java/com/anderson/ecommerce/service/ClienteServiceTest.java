@@ -76,7 +76,7 @@ public class ClienteServiceTest {
 
         //Teste
         NotFoundException erro = assertThrows(NotFoundException.class, () -> clienteService.getCliente(id));
-        assertEquals(erro.getMessage(), "Não existe cliente de id: " + id);
+        assertEquals("Não existe cliente de id: " + id, erro.getMessage());
     }
 
     //Testes do método getClientes()
@@ -175,6 +175,27 @@ public class ClienteServiceTest {
         assertEquals(clienteRequest.getTelefone(), clienteAtual.getTelefone());
         assertEquals(clienteResource.getEmail(), clienteAtual.getEmail()); //Não pode alterar o e-mail
         assertEquals(clienteResource.getId(), clienteAtual.getId()); // Não pode alterar o ID
+    }
+
+    @Test
+    @DisplayName("updateCliente() falha, pois não existe o cliente")
+    public void testUpdateClienteFalhaClienteInexistente(){
+        //Parâmetro
+        ClienteModelRequest clienteRequest = new ClienteModelRequest();
+        clienteRequest.setNome("Anderson Correia");
+        clienteRequest.setEmail("anderson123@email.com");
+        clienteRequest.setSenha("123");
+        clienteRequest.setTelefone("15123456789");
+
+        String id = "b";
+
+        //Simulação
+        when(clienteRepository.findById(id))
+                .thenReturn(Optional.ofNullable(null));
+
+        //Teste
+        NotFoundException erro = assertThrows(NotFoundException.class, () -> clienteService.updateCliente(id, clienteRequest));
+        assertEquals("Não existe cliente de id: " + id, erro.getMessage());
     }
 
     @Test
