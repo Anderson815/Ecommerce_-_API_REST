@@ -218,4 +218,35 @@ public class ClienteServiceTest {
         UpdateException erro = assertThrows(UpdateException.class, () -> clienteService.updateCliente(id, clienteRequest));
         assertEquals("Cliente não pode ser atualizado: o e-mail não pode ser alterado", erro.getMessage());
     }
+
+    @Test
+    @DisplayName("deleteClinte() com sucesso")
+    public void testDeleteClienteComSucesso(){
+
+        //Parâmetro
+        String id = "a";
+
+        //Simulação
+        when(clienteRepository.findById(id))
+                .thenReturn(Optional.of(clienteResource));
+
+        //Teste
+        clienteService.deleteCliente(id);
+        verify(clienteRepository).delete(clienteResource);
+    }
+
+    @Test
+    @DisplayName("deleteCliente() falha, pois não existe cliente com o id informado")
+    public void testDeleteClienteFalhaClienteInexistente(){
+        //Parâmetro
+        String id = "b";
+
+        //Simulação
+        when(clienteRepository.findById(id))
+                .thenReturn(Optional.ofNullable(null));
+
+        //Teste
+        NotFoundException erro = assertThrows(NotFoundException.class, () -> clienteService.deleteCliente(id));
+        assertEquals("Não existe cliente de id: " + id, erro.getMessage());
+    }
 }

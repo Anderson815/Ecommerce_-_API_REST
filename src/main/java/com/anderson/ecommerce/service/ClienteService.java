@@ -63,6 +63,8 @@ public class ClienteService {
         return this.clienteParaResposta(cliente);
     }
 
+    public void deleteCliente(String id) {
+    }
     //Métodos auxiliares
     private ClienteModelResource obterCliente(String id){
         return this.repository.findById(id).orElseThrow(() -> new NotFoundException("cliente", id)); //substituire o get
@@ -81,5 +83,6 @@ public class ClienteService {
 
         return clienteResponse;
     }
+
 
 }
