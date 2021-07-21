@@ -183,7 +183,7 @@ public class ClienteServiceTest {
         //Parâmetro
         ClienteModelRequest clienteRequest = new ClienteModelRequest();
         clienteRequest.setNome("Anderson Correia");
-        clienteRequest.setEmail("anderson123@email.com");
+        clienteRequest.setEmail("anderson@email.com");
         clienteRequest.setSenha("123");
         clienteRequest.setTelefone("15123456789");
 

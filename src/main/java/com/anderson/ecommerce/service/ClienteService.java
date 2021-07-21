@@ -2,6 +2,7 @@ package com.anderson.ecommerce.service;
 
 import com.anderson.ecommerce.exceptions.CreateException;
 import com.anderson.ecommerce.exceptions.NotFoundException;
+import com.anderson.ecommerce.exceptions.UpdateException;
 import com.anderson.ecommerce.model.request.ClienteModelRequest;
 import com.anderson.ecommerce.model.resource.ClienteModelResource;
 import com.anderson.ecommerce.model.response.ClienteModelResponse;
@@ -51,7 +52,15 @@ public class ClienteService {
     }
 
     public ClienteModelResponse updateCliente(String id, ClienteModelRequest clienteRequest) {
-        return null;
+
+        ClienteModelResource cliente = this.obterCliente(id);
+        if(!clienteRequest.getEmail().equals(cliente.getEmail())) throw new UpdateException("Cliente","o e-mail não pode ser alterado");
+
+        cliente.setNome(clienteRequest.getNome());
+        cliente.setSenha(clienteRequest.getSenha());
+        cliente.setTelefone(clienteRequest.getTelefone());
+
+        return this.clienteParaResposta(cliente);
     }
 
     //Métodos auxiliares
