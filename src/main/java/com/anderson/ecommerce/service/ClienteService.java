@@ -64,6 +64,7 @@ public class ClienteService {
     }
 
     public void deleteCliente(String id) {
+        repository.delete(this.obterCliente(id));
     }
     //Métodos auxiliares
     private ClienteModelResource obterCliente(String id){
