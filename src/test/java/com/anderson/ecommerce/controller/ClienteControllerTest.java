@@ -45,7 +45,7 @@ public class ClienteControllerTest {
 
     //Testes do método getCliente()
     @Test
-    @DisplayName("getConta() com sucesso")
+    @DisplayName("getCliente() com sucesso")
     public void testGetClienteComSucesso() throws Exception{
 
         //Parâmetro
@@ -61,7 +61,7 @@ public class ClienteControllerTest {
     }
 
     @Test
-    @DisplayName("getConta() falha, pois não existe o cliente com o ID informado")
+    @DisplayName("getCliente() falha, pois não existe o cliente com o ID informado")
     public void testGetClienteFalhaClienteNaoExiste() throws Exception{
 
         //Parâmetro
@@ -76,5 +76,13 @@ public class ClienteControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Não existe cliente de id: " + id)));
 
+    }
+
+    //Teste do método getContas()
+    @Test
+    @DisplayName("getClientes() com sucesso")
+    public void testGetClientesComSucesso() throws Exception{
+        mockMvc.perform(get("/cliente").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }
