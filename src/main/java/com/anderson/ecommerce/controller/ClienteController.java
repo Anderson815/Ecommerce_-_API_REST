@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/cliente")
 public class ClienteController {
@@ -19,5 +21,10 @@ public class ClienteController {
     @GetMapping("/{id}")
     public ResponseEntity<ClienteModelResponse> getCliente(@PathVariable(value = "id") String id){
         return ResponseEntity.ok().body(this.service.getCliente(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ClienteModelResponse>> getClintes(){
+        return ResponseEntity.ok().body(service.getClientes());
     }
 }
