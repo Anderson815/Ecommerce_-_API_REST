@@ -1,14 +1,16 @@
 package com.anderson.ecommerce.controller;
 
+import com.anderson.ecommerce.exceptions.CreateException;
+import com.anderson.ecommerce.model.request.ClienteModelRequest;
 import com.anderson.ecommerce.model.response.ClienteModelResponse;
 import com.anderson.ecommerce.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -26,5 +28,12 @@ public class ClienteController {
     @GetMapping
     public ResponseEntity<List<ClienteModelResponse>> getClintes(){
         return ResponseEntity.ok().body(service.getClientes());
+    }
+
+
+    @PostMapping
+    public ResponseEntity<ClienteModelResponse> createCliente(@Valid @RequestBody ClienteModelRequest cliente, BindingResult erro){
+        if(erro.hasErrors()) throw new CreateException("Cliente", erro.getAllErrors().get(0).getDefaultMessage());
+        return new ResponseEntity<>(service.createCliente(cliente), HttpStatus.CREATED);
     }
 }
