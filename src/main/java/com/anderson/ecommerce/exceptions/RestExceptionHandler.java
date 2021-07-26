@@ -15,4 +15,10 @@ public class RestExceptionHandler {
         ResponseExceptionDetails responseErro = new ResponseExceptionDetails(new Date(), HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND.name(), erro.getMessage());
         return new ResponseEntity<>(responseErro, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(CreateException.class)
+    public ResponseEntity<ResponseExceptionDetails> create(CreateException erro){
+        ResponseExceptionDetails responseErro = new ResponseExceptionDetails(new Date(), HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.name(), erro.getMessage());
+        return ResponseEntity.badRequest().body(responseErro);
+    }
 }

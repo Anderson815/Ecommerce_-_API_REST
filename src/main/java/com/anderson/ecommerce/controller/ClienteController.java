@@ -30,7 +30,6 @@ public class ClienteController {
         return ResponseEntity.ok().body(service.getClientes());
     }
 
-
     @PostMapping
     public ResponseEntity<ClienteModelResponse> createCliente(@Valid @RequestBody ClienteModelRequest cliente, BindingResult erro){
         if(erro.hasErrors()) throw new CreateException("Cliente", erro.getAllErrors().get(0).getDefaultMessage());
