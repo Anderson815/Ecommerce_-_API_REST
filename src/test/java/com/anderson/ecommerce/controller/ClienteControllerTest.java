@@ -12,6 +12,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -370,27 +371,35 @@ public class ClienteControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: uma conta com o e-mail informado já foi cadastrado")));
     }
 
-    //Testes do método updateCliente()
-//    @Test
-//    @DisplayName("deleteCliente() com sucesso")
-//    public void testUpdateClienteComSucesso() throws Exception{
-//
-//        //Parâmetros
-//        String id = "a";
-//        ClienteModelRequest clienteRequest = new ClienteModelRequest();
-//
-//        clienteRequest.setNome("Anderson");
-//        clienteRequest.setEmail("anderson@email.com.br"); //Alterado
-//        clienteRequest.setSenha("654321"); //Alterado
-//        clienteRequest.setTelefone("15987654321");
-//
-//        ObjectMapper jackson = new ObjectMapper();
-//        String clienteJson = jackson.writeValueAsString(clienteRequest);
-//
-//        //Teste
-//        mockMvc.perform(put("/cliente/{id}", id)
-//                .contentType(clienteJson)
-//                .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(MockMvcResultMatchers.status().isOk());
-//    }
+    //Testes do método deleteCliente()
+    @Test
+    @DisplayName("deleteCliente() com sucesso")
+    public void testDeleteClienteComSucesso() throws Exception{
+
+        //Parâmetros
+        String id = "a";
+
+        //Teste
+        mockMvc.perform(delete("/cliente/{id}", id))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("deleteCliente() falha, pois o id não existe")
+    public void testDeleteCliente() throws Exception{
+
+        //Parâmetros
+        String id = "a";
+
+        //Simulação
+        Mockito.doThrow(new NotFoundException("cliente", id))
+                .when(clienteService)
+                .deleteCliente(id);
+
+        //Teste
+        mockMvc.perform(delete("/cliente/{id}", id))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(404)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Não existe cliente de id: " + id)));
+    }
 }
