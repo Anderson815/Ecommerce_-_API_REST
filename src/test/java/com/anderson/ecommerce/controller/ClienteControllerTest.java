@@ -5,6 +5,7 @@ import com.anderson.ecommerce.exceptions.NotFoundException;
 import com.anderson.ecommerce.model.request.ClienteModelRequest;
 import com.anderson.ecommerce.model.response.ClienteModelResponse;
 import com.anderson.ecommerce.service.ClienteService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -96,10 +97,19 @@ public class ClienteControllerTest {
         //Parâmetro
         String body = "{\"nome\":\"Ana\", \"email\": \"ana@email.com\", \"senha\": \"123456\", \"telefone\": \"15987654321\" }";
 
+        //Simulação
+        ObjectMapper jackson = new ObjectMapper();
+        ClienteModelRequest cliente = jackson.readValue(body, ClienteModelRequest.class);
+
+        when(clienteService.createCliente(cliente))
+                .thenReturn(this.clienteResponse);
+//        when(clienteService.createCliente(cliente))
+//                .thenThrow(new CreateException("Caralho", "Ridiculo isso"));
+
         //Teste
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(notNull())));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nome", Matchers.is("Ana")));
     }
 
     // --> Problemas com o nome
@@ -128,7 +138,7 @@ public class ClienteControllerTest {
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: O nome não foi informado")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: O nome deve possuir de 3 a 35 caracteres")));
     }
 
     @Test
@@ -272,7 +282,7 @@ public class ClienteControllerTest {
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: A senha não foi informada")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: A senha deve possuir de 6 a 20 caracteres")));
     }
 
     @Test
@@ -330,7 +340,7 @@ public class ClienteControllerTest {
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: O telefone não foi informado")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: O telefone deve possuir 11 números (ddd mais o número)")));
     }
 
     @Test
@@ -376,13 +386,13 @@ public class ClienteControllerTest {
         clienteRequest.setSenha("123456");
         clienteRequest.setTelefone("15987654321");
 
-        when(clienteService.createCliente(clienteRequest))
+        when(clienteService.createCliente(any()))
                 .thenThrow(new CreateException("Cliente", "uma conta com o e-mail informado já foi cadastrado"));
 
         //Teste
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is("400")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: O telefone deve possuir 11 números (ddd mais o número)")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: uma conta com o e-mail informado já foi cadastrado")));
     }
 }
