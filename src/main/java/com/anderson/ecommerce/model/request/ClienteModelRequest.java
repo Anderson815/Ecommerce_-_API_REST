@@ -1,13 +1,10 @@
 package com.anderson.ecommerce.model.request;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 public class ClienteModelRequest {
 
-    @NotBlank(message = "O nome não foi informado")
+    @NotNull(message = "O nome não foi informado")
     @Size(min = 3, max = 35, message = "O nome deve possuir de 3 a 35 caracteres")
     private String nome;
 
@@ -16,11 +13,11 @@ public class ClienteModelRequest {
     @Size(max = 35, message = "O e-mail deve possuir no máximo 35 caracteres")
     private String email;
 
-    @NotBlank(message = "A senha não foi informada")
+    @NotNull(message = "A senha não foi informada")
     @Size(min = 6, max = 20, message = "A senha deve possuir de 6 a 20 caracteres")
     private String senha;
 
-    @NotBlank(message = "O telefone não foi informado")
+    @NotNull(message = "O telefone não foi informado")
     @Size(min = 11, max = 11, message = "O telefone deve possuir 11 números (ddd mais o número)")
     private String telefone;
 
