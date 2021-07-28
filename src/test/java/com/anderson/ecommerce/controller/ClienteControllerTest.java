@@ -95,21 +95,16 @@ public class ClienteControllerTest {
     public void testCreateClienteComSucesso() throws Exception{
 
         //Parâmetro
-        String body = "{\"nome\":\"Ana\", \"email\": \"ana@email.com\", \"senha\": \"123456\", \"telefone\": \"15987654321\" }";
+        String body = "{\"nome\":\"Anderson\", \"email\": \"anderson@email.com\", \"senha\": \"123456\", \"telefone\": \"15987654321\" }";
 
         //Simulação
-        ObjectMapper jackson = new ObjectMapper();
-        ClienteModelRequest cliente = jackson.readValue(body, ClienteModelRequest.class);
-
-        when(clienteService.createCliente(cliente))
+        when(clienteService.createCliente(any()))
                 .thenReturn(this.clienteResponse);
-//        when(clienteService.createCliente(cliente))
-//                .thenThrow(new CreateException("Caralho", "Ridiculo isso"));
 
         //Teste
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.nome", Matchers.is("Ana")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.nome", Matchers.is("Anderson")));
     }
 
     // --> Problemas com o nome
@@ -220,20 +215,6 @@ public class ClienteControllerTest {
 
         //Parâmetro
         String body = "{\"nome\":\"Anderson\", \"email\":\"andersonemail.com\", \"senha\": \"123456\", \"telefone\":\"15987654321\"}";
-
-        //Teste
-        mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isBadRequest())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: O campo e-mail não está no padrão de e-mail")));
-    }
-
-    @Test
-    @DisplayName("creteCliente() falha, pois o e-mail está fora de padrão (.)")
-    public void testCreateClienteFalhaEmailForaPadraoPonto() throws Exception{
-
-        //Parâmetro
-        String body = "{\"nome\":\"Anderson\", \"email\":\"anderson@emailcom\", \"senha\": \"123456\", \"telefone\":\"15987654321\"}";
 
         //Teste
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
@@ -379,13 +360,6 @@ public class ClienteControllerTest {
         String body = "{\"nome\":\"Anderson\", \"email\": \"anderson@email.com\", \"senha\": \"123456\", \"telefone\": \"15987654321\" }";
 
         //Simulação
-        ClienteModelRequest clienteRequest = new ClienteModelRequest();
-
-        clienteRequest.setNome("Anderson");
-        clienteRequest.setEmail("anderson@email.com");
-        clienteRequest.setSenha("123456");
-        clienteRequest.setTelefone("15987654321");
-
         when(clienteService.createCliente(any()))
                 .thenThrow(new CreateException("Cliente", "uma conta com o e-mail informado já foi cadastrado"));
 
@@ -395,4 +369,28 @@ public class ClienteControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: uma conta com o e-mail informado já foi cadastrado")));
     }
+
+    //Testes do método updateCliente()
+//    @Test
+//    @DisplayName("deleteCliente() com sucesso")
+//    public void testUpdateClienteComSucesso() throws Exception{
+//
+//        //Parâmetros
+//        String id = "a";
+//        ClienteModelRequest clienteRequest = new ClienteModelRequest();
+//
+//        clienteRequest.setNome("Anderson");
+//        clienteRequest.setEmail("anderson@email.com.br"); //Alterado
+//        clienteRequest.setSenha("654321"); //Alterado
+//        clienteRequest.setTelefone("15987654321");
+//
+//        ObjectMapper jackson = new ObjectMapper();
+//        String clienteJson = jackson.writeValueAsString(clienteRequest);
+//
+//        //Teste
+//        mockMvc.perform(put("/cliente/{id}", id)
+//                .contentType(clienteJson)
+//                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(MockMvcResultMatchers.status().isOk());
+//    }
 }
