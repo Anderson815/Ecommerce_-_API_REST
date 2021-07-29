@@ -35,4 +35,10 @@ public class ClienteController {
         if(erro.hasErrors()) throw new CreateException("Cliente", erro.getAllErrors().get(0).getDefaultMessage());
         return new ResponseEntity<>(service.createCliente(cliente), HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteCliente(@PathVariable(value = "id") String id){
+        service.deleteCliente(id);
+        return ResponseEntity.noContent().build();
+    }
 }

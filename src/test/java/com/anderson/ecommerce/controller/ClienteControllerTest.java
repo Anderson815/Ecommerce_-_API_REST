@@ -389,7 +389,7 @@ public class ClienteControllerTest {
     public void testDeleteCliente() throws Exception{
 
         //Parâmetros
-        String id = "a";
+        String id = "b";
 
         //Simulação
         Mockito.doThrow(new NotFoundException("cliente", id))
