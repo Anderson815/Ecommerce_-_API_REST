@@ -16,8 +16,8 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(responseErro, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(CreateException.class)
-    public ResponseEntity<ResponseExceptionDetails> create(CreateException erro){
+    @ExceptionHandler(InvalidValueException.class)
+    public ResponseEntity<ResponseExceptionDetails> create(InvalidValueException erro){
         ResponseExceptionDetails responseErro = new ResponseExceptionDetails(new Date(), HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.name(), erro.getMessage());
         return ResponseEntity.badRequest().body(responseErro);
     }

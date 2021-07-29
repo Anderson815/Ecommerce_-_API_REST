@@ -1,6 +1,6 @@
 package com.anderson.ecommerce.service;
 
-import com.anderson.ecommerce.exceptions.CreateException;
+import com.anderson.ecommerce.exceptions.InvalidValueException;
 import com.anderson.ecommerce.exceptions.NotFoundException;
 import com.anderson.ecommerce.exceptions.UpdateException;
 import com.anderson.ecommerce.model.request.ClienteModelRequest;
@@ -37,7 +37,7 @@ public class ClienteService {
 
     public ClienteModelResponse createCliente(ClienteModelRequest clienteRequest) {
 
-        if(this.repository.existsByEmail(clienteRequest.getEmail())) throw new CreateException("Cliente", "uma conta com o e-mail informado já foi cadastrado");
+        if(this.repository.existsByEmail(clienteRequest.getEmail())) throw new InvalidValueException("Cliente", "uma conta com o e-mail informado já foi cadastrado");
 
         ClienteModelResource cliente = new ClienteModelResource();
         cliente.setNome(clienteRequest.getNome());

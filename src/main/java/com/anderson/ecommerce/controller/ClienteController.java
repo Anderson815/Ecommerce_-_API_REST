@@ -1,6 +1,6 @@
 package com.anderson.ecommerce.controller;
 
-import com.anderson.ecommerce.exceptions.CreateException;
+import com.anderson.ecommerce.exceptions.InvalidValueException;
 import com.anderson.ecommerce.model.request.ClienteModelRequest;
 import com.anderson.ecommerce.model.response.ClienteModelResponse;
 import com.anderson.ecommerce.service.ClienteService;
@@ -32,7 +32,7 @@ public class ClienteController {
 
     @PostMapping
     public ResponseEntity<ClienteModelResponse> createCliente(@Valid @RequestBody ClienteModelRequest cliente, BindingResult erro){
-        if(erro.hasErrors()) throw new CreateException("Cliente", erro.getAllErrors().get(0).getDefaultMessage());
+        if(erro.hasErrors()) throw new InvalidValueException("Cliente", erro.getAllErrors().get(0).getDefaultMessage());
         return new ResponseEntity<>(service.createCliente(cliente), HttpStatus.CREATED);
     }
 

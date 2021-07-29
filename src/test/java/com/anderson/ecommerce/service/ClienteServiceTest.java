@@ -1,7 +1,7 @@
 package com.anderson.ecommerce.service;
 
 
-import com.anderson.ecommerce.exceptions.CreateException;
+import com.anderson.ecommerce.exceptions.InvalidValueException;
 import com.anderson.ecommerce.exceptions.NotFoundException;
 import com.anderson.ecommerce.exceptions.UpdateException;
 import com.anderson.ecommerce.model.request.ClienteModelRequest;
@@ -147,7 +147,7 @@ public class ClienteServiceTest {
                 .thenReturn(true);
 
         //Teste
-        CreateException erro = assertThrows(CreateException.class, () -> clienteService.createCliente(clienteRequest));
+        InvalidValueException erro = assertThrows(InvalidValueException.class, () -> clienteService.createCliente(clienteRequest));
         assertEquals("Cliente não pode ser criado: uma conta com o e-mail informado já foi cadastrado", erro.getMessage());
     }
 

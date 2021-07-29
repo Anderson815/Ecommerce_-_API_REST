@@ -1,17 +1,14 @@
 package com.anderson.ecommerce.controller;
 
-import com.anderson.ecommerce.exceptions.CreateException;
+import com.anderson.ecommerce.exceptions.InvalidValueException;
 import com.anderson.ecommerce.exceptions.NotFoundException;
-import com.anderson.ecommerce.model.request.ClienteModelRequest;
 import com.anderson.ecommerce.model.response.ClienteModelResponse;
 import com.anderson.ecommerce.service.ClienteService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -362,7 +359,7 @@ public class ClienteControllerTest {
 
         //Simulação
         when(clienteService.createCliente(any()))
-                .thenThrow(new CreateException("Cliente", "uma conta com o e-mail informado já foi cadastrado"));
+                .thenThrow(new InvalidValueException("Cliente", "uma conta com o e-mail informado já foi cadastrado"));
 
         //Teste
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
