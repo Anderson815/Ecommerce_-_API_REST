@@ -37,7 +37,7 @@ public class ClienteService {
 
     public ClienteModelResponse createCliente(ClienteModelRequest clienteRequest) {
 
-        if(this.repository.existsByEmail(clienteRequest.getEmail())) throw new InvalidValueException("Cliente", "uma conta com o e-mail informado já foi cadastrado");
+        if(this.repository.existsByEmail(clienteRequest.getEmail())) throw new InvalidValueException("uma conta com o e-mail informado já foi cadastrado");
 
         ClienteModelResource cliente = new ClienteModelResource();
         cliente.setNome(clienteRequest.getNome());

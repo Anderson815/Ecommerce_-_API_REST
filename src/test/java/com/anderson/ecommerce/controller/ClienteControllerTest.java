@@ -359,7 +359,7 @@ public class ClienteControllerTest {
 
         //Simulação
         when(clienteService.createCliente(any()))
-                .thenThrow(new InvalidValueException("Cliente", "uma conta com o e-mail informado já foi cadastrado"));
+                .thenThrow(new InvalidValueException("um cliente com o e-mail informado já foi cadastrado"));
 
         //Teste
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
