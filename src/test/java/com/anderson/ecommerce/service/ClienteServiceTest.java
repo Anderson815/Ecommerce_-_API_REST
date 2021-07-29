@@ -148,7 +148,7 @@ public class ClienteServiceTest {
 
         //Teste
         InvalidValueException erro = assertThrows(InvalidValueException.class, () -> clienteService.createCliente(clienteRequest));
-        assertEquals("Cliente não pode ser criado: uma conta com o e-mail informado já foi cadastrado", erro.getMessage());
+        assertEquals("Campo inválido: um cliente com o e-mail informado já foi cadastrado", erro.getMessage());
     }
 
     //Testes do método updateCliente()
