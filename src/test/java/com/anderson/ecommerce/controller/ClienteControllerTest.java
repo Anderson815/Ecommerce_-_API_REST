@@ -117,7 +117,7 @@ public class ClienteControllerTest {
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: O nome não foi informado")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Campo inválido: O nome não foi informado")));
     }
 
     @Test
@@ -131,7 +131,7 @@ public class ClienteControllerTest {
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: O nome deve possuir de 3 a 35 caracteres")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Campo inválido: O nome deve possuir de 3 a 35 caracteres")));
     }
 
     @Test
@@ -145,7 +145,7 @@ public class ClienteControllerTest {
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: O nome deve possuir de 3 a 35 caracteres")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Campo inválido: O nome deve possuir de 3 a 35 caracteres")));
 
     }
 
@@ -160,7 +160,7 @@ public class ClienteControllerTest {
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: O nome deve possuir de 3 a 35 caracteres")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Campo inválido: O nome deve possuir de 3 a 35 caracteres")));
     }
 
     // --> Problemas com o e-mail
@@ -175,7 +175,7 @@ public class ClienteControllerTest {
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: O e-mail não foi informado")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Campo inválido: O e-mail não foi informado")));
     }
 
     @Test
@@ -189,7 +189,7 @@ public class ClienteControllerTest {
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: O e-mail não foi informado")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Campo inválido: O e-mail não foi informado")));
 
     }
 
@@ -204,7 +204,7 @@ public class ClienteControllerTest {
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: O campo e-mail não está no padrão de e-mail")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Campo inválido: O campo e-mail não está no padrão de e-mail")));
     }
 
     @Test
@@ -218,7 +218,7 @@ public class ClienteControllerTest {
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: O campo e-mail não está no padrão de e-mail")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Campo inválido: O campo e-mail não está no padrão de e-mail")));
     }
 
     @Test
@@ -231,7 +231,7 @@ public class ClienteControllerTest {
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: O e-mail deve possuir no máximo 35 caracteres")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Campo inválido: O e-mail deve possuir no máximo 35 caracteres")));
     }
 
     // --> Problemas com a senha
@@ -247,7 +247,7 @@ public class ClienteControllerTest {
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: A senha não foi informada")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Campo inválido: A senha não foi informada")));
     }
 
     @Test
@@ -261,7 +261,7 @@ public class ClienteControllerTest {
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: A senha deve possuir de 6 a 20 caracteres")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Campo inválido: A senha deve possuir de 6 a 20 caracteres")));
     }
 
     @Test
@@ -275,7 +275,7 @@ public class ClienteControllerTest {
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: A senha deve possuir de 6 a 20 caracteres")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Campo inválido: A senha deve possuir de 6 a 20 caracteres")));
     }
 
     @Test
@@ -289,7 +289,7 @@ public class ClienteControllerTest {
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: A senha deve possuir de 6 a 20 caracteres")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Campo inválido: A senha deve possuir de 6 a 20 caracteres")));
     }
 
     // --> Problemas com o telefone
@@ -305,7 +305,7 @@ public class ClienteControllerTest {
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: O telefone não foi informado")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Campo inválido: O telefone não foi informado")));
     }
 
     @Test
@@ -319,7 +319,7 @@ public class ClienteControllerTest {
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: O telefone deve possuir 11 números (ddd mais o número)")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Campo inválido: O telefone deve possuir 11 números (ddd mais o número)")));
     }
 
     @Test
@@ -333,7 +333,7 @@ public class ClienteControllerTest {
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: O telefone deve possuir 11 números (ddd mais o número)")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Campo inválido: O telefone deve possuir 11 números (ddd mais o número)")));
     }
 
     @Test
@@ -346,7 +346,7 @@ public class ClienteControllerTest {
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: O telefone deve possuir 11 números (ddd mais o número)")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Campo inválido: O telefone deve possuir 11 números (ddd mais o número)")));
     }
 
     // --> Análise no BD
@@ -359,13 +359,13 @@ public class ClienteControllerTest {
 
         //Simulação
         when(clienteService.createCliente(any()))
-                .thenThrow(new InvalidValueException("um cliente com o e-mail informado já foi cadastrado"));
+                .thenThrow(new InvalidValueException("Um cliente com o e-mail informado já foi cadastrado"));
 
         //Teste
         mockMvc.perform(post("/cliente").content(body).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.cod", Matchers.is(400)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Cliente não pode ser criado: uma conta com o e-mail informado já foi cadastrado")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.mensagem", Matchers.is("Campo inválido: Um cliente com o e-mail informado já foi cadastrado")));
     }
 
     //Testes do método deleteCliente()
