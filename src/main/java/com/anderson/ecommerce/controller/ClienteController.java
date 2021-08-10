@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -34,6 +35,12 @@ public class ClienteController {
     public ResponseEntity<ClienteModelResponse> createCliente(@Valid @RequestBody ClienteModelRequest cliente, BindingResult erro){
         if(erro.hasErrors()) throw new InvalidValueException(erro.getAllErrors().get(0).getDefaultMessage());
         return new ResponseEntity<>(service.createCliente(cliente), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ClienteModelResponse> updateCliente(@PathVariable(value = "id") String id, @Valid @RequestBody ClienteModelRequest cliente, BindingResult erro){
+        if(erro.hasErrors()) throw new InvalidValueException(erro.getAllErrors().get(0).getDefaultMessage());
+        return new ResponseEntity<>(service.updateCliente(id, cliente), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
