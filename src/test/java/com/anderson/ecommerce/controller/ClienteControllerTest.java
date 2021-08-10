@@ -382,6 +382,7 @@ public class ClienteControllerTest {
         clienteRequest.setSenha("654321");
         clienteRequest.setNome("Anderson CS");
         clienteRequest.setTelefone("15123456789");
+        clienteRequest.setEmail(clienteResponse.getEmail());
 
         String id = clienteResponse.getId();
         String clienteBodyRequest = json.writeValueAsString(clienteRequest);
@@ -394,7 +395,7 @@ public class ClienteControllerTest {
         clienteResponse.setTelefone("15123456789");
         clienteResponse.setEmail(this.clienteResponse.getEmail());
 
-        when(clienteService.updateCliente(id, any()))
+        when(clienteService.updateCliente(eq(id), any(ClienteModelRequest.class)))
                 .thenReturn(clienteResponse);
 
         //Teste
@@ -420,12 +421,13 @@ public class ClienteControllerTest {
         clienteRequest.setSenha("654321");
         clienteRequest.setNome("Anderson CS");
         clienteRequest.setTelefone("15123456789");
+        clienteRequest.setEmail(clienteResponse.getEmail());
 
         String id = "b";
         String clienteBodyRequest = json.writeValueAsString(clienteRequest);
 
         //Simulação
-        when(clienteService.updateCliente(id, any()))
+        when(clienteService.updateCliente(eq(id), any(ClienteModelRequest.class)))
                 .thenThrow(new NotFoundException("cliente", id));
 
         //Teste
@@ -509,14 +511,14 @@ public class ClienteControllerTest {
         ClienteModelRequest clienteRequest = new ClienteModelRequest();
         clienteRequest.setNome(clienteResponse.getNome());
         clienteRequest.setSenha(clienteResponse.getSenha());
-        clienteRequest.setTelefone(clienteRequest.getTelefone());
+        clienteRequest.setTelefone(clienteResponse.getTelefone());
         clienteRequest.setEmail("andersoncs@email.com");
 
         String id = clienteResponse.getId();
         String clienteBodyRequest = jason.writeValueAsString(clienteRequest);
 
         // Simulação
-        when(clienteService.updateCliente(id, any()))
+        when(clienteService.updateCliente(eq(id), any(ClienteModelRequest.class)))
                 .thenThrow(new UpdateException("Cliente","o e-mail não pode ser alterado"));
 
         //Teste
