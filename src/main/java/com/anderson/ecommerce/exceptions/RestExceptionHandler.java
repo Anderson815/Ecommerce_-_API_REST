@@ -1,5 +1,6 @@
 package com.anderson.ecommerce.exceptions;
 
+import org.hibernate.sql.Update;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -20,5 +21,11 @@ public class RestExceptionHandler {
     public ResponseEntity<ResponseExceptionDetails> create(InvalidValueException erro){
         ResponseExceptionDetails responseErro = new ResponseExceptionDetails(new Date(), HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.name(), erro.getMessage());
         return ResponseEntity.badRequest().body(responseErro);
+    }
+
+    @ExceptionHandler(UpdateException.class)
+    public ResponseEntity<ResponseExceptionDetails> update(UpdateException erro){
+        ResponseExceptionDetails responseErro = new ResponseExceptionDetails(new Date(), HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.name(), erro.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseErro);
     }
 }
