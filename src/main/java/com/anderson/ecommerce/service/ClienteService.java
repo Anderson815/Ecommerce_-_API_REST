@@ -60,6 +60,8 @@ public class ClienteService {
         cliente.setSenha(clienteRequest.getSenha());
         cliente.setTelefone(clienteRequest.getTelefone());
 
+        repository.save(cliente);
+
         return this.clienteParaResposta(cliente);
     }
 
