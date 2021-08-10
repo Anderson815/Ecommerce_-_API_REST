@@ -219,6 +219,7 @@ public class ClienteServiceTest {
         assertEquals("Cliente não pode ser atualizado: o e-mail não pode ser alterado", erro.getMessage());
     }
 
+    //Teste do método deleteCliente()
     @Test
     @DisplayName("deleteClinte() com sucesso")
     public void testDeleteClienteComSucesso(){
