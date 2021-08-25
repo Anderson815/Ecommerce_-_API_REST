@@ -1,14 +1,9 @@
 package com.anderson.ecommerce.exceptions;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
-import java.util.spi.CalendarDataProvider;
 
 public class ResponseExceptionDetails {
 
