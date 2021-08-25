@@ -13,19 +13,19 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ResponseExceptionDetails> notFound(NotFoundException erro){
-        ResponseExceptionDetails responseErro = new ResponseExceptionDetails(new Date(), HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND.name(), erro.getMessage());
+        ResponseExceptionDetails responseErro = new ResponseExceptionDetails(HttpStatus.NOT_FOUND.value(), HttpStatus.NOT_FOUND.name(), erro.getMessage());
         return new ResponseEntity<>(responseErro, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(InvalidValueException.class)
     public ResponseEntity<ResponseExceptionDetails> create(InvalidValueException erro){
-        ResponseExceptionDetails responseErro = new ResponseExceptionDetails(new Date(), HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.name(), erro.getMessage());
+        ResponseExceptionDetails responseErro = new ResponseExceptionDetails(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.name(), erro.getMessage());
         return ResponseEntity.badRequest().body(responseErro);
     }
 
     @ExceptionHandler(UpdateException.class)
     public ResponseEntity<ResponseExceptionDetails> update(UpdateException erro){
-        ResponseExceptionDetails responseErro = new ResponseExceptionDetails(new Date(), HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.name(), erro.getMessage());
+        ResponseExceptionDetails responseErro = new ResponseExceptionDetails(HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.name(), erro.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseErro);
     }
 }
