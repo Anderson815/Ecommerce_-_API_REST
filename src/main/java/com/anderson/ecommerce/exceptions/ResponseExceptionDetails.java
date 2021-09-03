@@ -16,6 +16,10 @@ public class ResponseExceptionDetails {
 
     public ResponseExceptionDetails(int cod, String erro, String mensagem) {
 
+        //Deve ser corrigido, pois no Hroku ele ainda está errado
+        //Possível solução é:
+        //TimeZone horaBrasil = TimeZone.getTimeZone("GMT-3");
+
         this.cod = cod;
         this.erro = erro;
         this.mensagem = mensagem;
@@ -25,7 +29,6 @@ public class ResponseExceptionDetails {
 
         SimpleDateFormat formatacaoData = new SimpleDateFormat("dd-MM-yyyy 'às' HH:mm:ss");
         this.data = formatacaoData.format(momentoErro.getTime());
-
     }
 
     //Get e Set
