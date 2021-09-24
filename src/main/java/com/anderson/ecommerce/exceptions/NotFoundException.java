@@ -6,4 +6,7 @@ public class NotFoundException extends RuntimeException{
         super("Não existe " + classe + " de id: " + id);
     }
 
+    public NotFoundException(String mensagem){
+        super(mensagem);
+    }
 }
