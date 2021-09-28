@@ -1,5 +1,6 @@
 package com.anderson.ecommerce.service;
 
+import com.anderson.ecommerce.exceptions.InvalidValueException;
 import com.anderson.ecommerce.exceptions.NotFoundException;
 import com.anderson.ecommerce.model.resource.ProdutoModelResource;
 import com.anderson.ecommerce.model.response.ProdutoModelResponse;
@@ -11,8 +12,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -74,5 +78,127 @@ public class ProdutoServiceTest {
         //Teste
         NotFoundException erro = assertThrows(NotFoundException.class, () -> produtoService.getProduto(id));
         assertEquals("Não existe produto de id: " + id, erro.getMessage());
+    }
+
+    //Teste do método getProdutos()
+    @Test
+    @DisplayName("getProdutos() com sucesso")
+    public void testGetProdutosComSucesso(){
+
+        //parametros
+        int indice = 2;
+        int tamanho = 4;
+
+        //Esperado
+        long quantidadeElementos = 11;
+        boolean primeiraPage = false;
+        boolean ultimaPage = true;
+
+
+        //Recursos
+        ProdutoModelResource produtoResource1 = new ProdutoModelResource();
+
+        produtoResource1.setId("a");
+        produtoResource1.setNome("celular");
+        produtoResource1.setMarca("SAMSUNG");
+        produtoResource1.setModelo("XLT3");
+        produtoResource1.setPreco(new BigDecimal("1500.00"));
+        produtoResource1.setEstoque(50);
+        produtoResource1.setItens(null);
+        
+        ProdutoModelResource produtoResource2 = new ProdutoModelResource();
+
+        produtoResource2.setId("b");
+        produtoResource2.setNome("balde");
+        produtoResource2.setMarca("bbb");
+        produtoResource2.setModelo("baldão");
+        produtoResource2.setPreco(new BigDecimal("25.84"));
+        produtoResource2.setEstoque(15);
+        produtoResource2.setItens(null);
+        
+        ProdutoModelResource produtoResource3 = new ProdutoModelResource();
+
+        produtoResource3.setId("c");
+        produtoResource3.setNome("computador");
+        produtoResource3.setMarca("lenovo");
+        produtoResource3.setModelo("PC_DA_NASA");
+        produtoResource3.setPreco(new BigDecimal("5450.99"));
+        produtoResource3.setEstoque(4);
+        produtoResource3.setItens(null);
+        
+        List<ProdutoModelResource> listaResource = new ArrayList<>();
+        listaResource.add(produtoResource1);
+        listaResource.add(produtoResource2);
+        listaResource.add(produtoResource3);
+        
+        //Preparao para simulação
+        Pageable paginacao = PageRequest.of(indice, tamanho, Sort.Direction.ASC, "nome");
+        Page<ProdutoModelResource> pageResource = new PageImpl<>(listaResource, paginacao, quantidadeElementos);
+        
+        //Simulação
+//        doReturn(pageResource).when(produtoRepository.findAll(paginacao));
+        when(produtoRepository.count())
+                .thenReturn(quantidadeElementos);
+
+        when(produtoRepository.findAll(paginacao))
+                .thenReturn(pageResource);
+
+
+        //Teste
+        Page<ProdutoModelResponse> pageRespostaAtual = this.produtoService.getProdutos(indice, tamanho);
+        assertEquals(quantidadeElementos, pageRespostaAtual.getTotalElements());
+        assertFalse(pageRespostaAtual.isFirst());
+        assertTrue(pageRespostaAtual.isLast());
+        assertEquals(3, pageRespostaAtual.getTotalPages());
+    }
+
+    @Test
+    @DisplayName("getProdutos() falha, pois o indice é menor que 0")
+    public void testGetProdutosFalhaIndiceMenorQue0(){
+
+        //parametros
+        int indice = -1;
+        int tamanho = 4;
+
+        //Teste
+        InvalidValueException erro = assertThrows(InvalidValueException.class, () -> this.produtoService.getProdutos(indice, tamanho));
+        assertEquals("Campo inválido: número da página abaixo de 0", erro.getMessage());
+    }
+
+    @Test
+    @DisplayName("getProduto() falha, pois a pagina tem um tamanho menor que 1")
+    public void testGetProdutosFalhaTamanhoMenorQue1(){
+
+        //Parâmetros
+        int indice = 2;
+        int tamanho = 0;
+
+        //Teste
+        InvalidValueException erro = assertThrows(InvalidValueException.class, () -> this.produtoService.getProdutos(indice, tamanho));
+        assertEquals("Campo inválido: o tamanho da página é menor que 1", erro.getMessage());
+    }
+
+    @Test
+    @DisplayName("getProdutos() falha, pois não existe produto na page")
+    public void testGetProdutosFalhaSemElementosNaPage(){
+
+        //Parâmetros
+        int indice = 4;
+        int tamanho = 3;
+
+        //Preparação
+        List<ProdutoModelResource> listaResource = new ArrayList<>();
+        Pageable paginacao = PageRequest.of(indice, tamanho, Sort.Direction.ASC, "nome");
+        int totalElementos = 12;
+
+        Page<ProdutoModelResource> pageResource = new PageImpl<>(listaResource, paginacao, totalElementos);
+
+        //Simulação
+        when(produtoRepository.findAll(paginacao))
+                .thenReturn(pageResource);
+
+        //Teste
+        NotFoundException erro = assertThrows(NotFoundException.class, () -> this.produtoService.getProdutos(indice, tamanho));
+        assertEquals("Número da Página não encontrada", erro.getMessage());
     }
 }
