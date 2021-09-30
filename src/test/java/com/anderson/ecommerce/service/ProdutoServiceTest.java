@@ -2,6 +2,8 @@ package com.anderson.ecommerce.service;
 
 import com.anderson.ecommerce.exceptions.InvalidValueException;
 import com.anderson.ecommerce.exceptions.NotFoundException;
+import com.anderson.ecommerce.exceptions.ResourceExistsException;
+import com.anderson.ecommerce.model.request.ProdutoModelRequest;
 import com.anderson.ecommerce.model.resource.ProdutoModelResource;
 import com.anderson.ecommerce.model.response.ProdutoModelResponse;
 import com.anderson.ecommerce.repository.ProdutoRepository;
@@ -200,5 +202,38 @@ public class ProdutoServiceTest {
         //Teste
         NotFoundException erro = assertThrows(NotFoundException.class, () -> this.produtoService.getProdutos(indice, tamanho));
         assertEquals("Número da Página não encontrada", erro.getMessage());
+    }
+    
+    //Testes do método createProduto()
+    @Test
+    @DisplayName("createProduto() com sucesso")
+    public void testCreateProdutoComSucesso(){
+        //Parâmetro
+        ProdutoModelRequest produtoRequest = new ProdutoModelRequest("celular", "SAMSUNG", "XLT3", new BigDecimal("1500.00"), 50);
+
+        //Teste
+        ProdutoModelResponse produtoAtual = this.produtoService.createProduto(produtoRequest);
+        assertNotNull(produtoAtual);
+        assertEquals("celular", produtoAtual.getNome());
+        assertEquals("SAMSUNG", produtoAtual.getMarca());
+        assertEquals("XLT3", produtoAtual.getModelo());
+        assertNotEquals("", produtoAtual.getId());
+        assertTrue(produtoAtual.getEstoque() >= 0);
+        assertEquals(1, produtoAtual.getPreco().compareTo(new BigDecimal("0")));
+    }
+
+    @Test
+    @DisplayName("createProduto() falha, pois já existe um produto com o mesmo nome, marca e modelo")
+    public void testCreateProdutoFalhaProdutoJaFoiCadastrado(){
+        //Parâmetro
+        ProdutoModelRequest produtoRequest = new ProdutoModelRequest("celular", "SAMSUNG", "XLT3", new BigDecimal("1500.00"), 50);
+
+        //Simulação
+        when(produtoRepository.existsByNomeAndModeloAndMarca(produtoRequest.getNome(), produtoRequest.getModelo(), produtoRequest.getModelo()))
+                .thenReturn(true);
+
+        //Teste
+        ResourceExistsException erro = assertThrows(ResourceExistsException.class, () -> this.produtoService.createProduto(produtoRequest));
+        assertEquals("Já existe esse produto no sistema", erro.getMessage());
     }
 }

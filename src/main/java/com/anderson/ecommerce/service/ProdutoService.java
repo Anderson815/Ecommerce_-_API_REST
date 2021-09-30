@@ -2,6 +2,7 @@ package com.anderson.ecommerce.service;
 
 import com.anderson.ecommerce.exceptions.InvalidValueException;
 import com.anderson.ecommerce.exceptions.NotFoundException;
+import com.anderson.ecommerce.model.request.ProdutoModelRequest;
 import com.anderson.ecommerce.model.resource.ProdutoModelResource;
 import com.anderson.ecommerce.model.response.ProdutoModelResponse;
 import com.anderson.ecommerce.repository.ProdutoRepository;
@@ -58,5 +59,9 @@ public class ProdutoService {
                 produtoResource.getModelo(),
                 produtoResource.getPreco(),
                 produtoResource.getEstoque());
+    }
+
+    public ProdutoModelResponse createProduto(ProdutoModelRequest produtoRequest) {
+        return null;
     }
 }
