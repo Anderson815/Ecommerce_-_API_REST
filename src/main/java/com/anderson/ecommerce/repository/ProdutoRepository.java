@@ -10,5 +10,5 @@ import java.util.List;
 public interface ProdutoRepository extends JpaRepository<ProdutoModelResource, String> {
     List<ProdutoModelResource> findByMarca (String marca);
     List<ProdutoModelResource> findByNomeStartingWith (String nome);
-    boolean existsByModeloAndMarca(String modelo, String Marca);
+    boolean existsByNomeAndModeloAndMarca(String nome, String modelo, String Marca);
 }
