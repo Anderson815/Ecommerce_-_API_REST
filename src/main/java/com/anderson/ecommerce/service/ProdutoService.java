@@ -2,6 +2,7 @@ package com.anderson.ecommerce.service;
 
 import com.anderson.ecommerce.exceptions.InvalidValueException;
 import com.anderson.ecommerce.exceptions.NotFoundException;
+import com.anderson.ecommerce.exceptions.ResourceExistsException;
 import com.anderson.ecommerce.model.request.ProdutoModelRequest;
 import com.anderson.ecommerce.model.resource.ProdutoModelResource;
 import com.anderson.ecommerce.model.response.ProdutoModelResponse;
@@ -46,6 +47,16 @@ public class ProdutoService {
         return this.produtoParaResposta(this.obterProduto(id));
     }
 
+    public ProdutoModelResponse createProduto(ProdutoModelRequest produtoRequest) throws ResourceExistsException{
+
+        if(repository.existsByNomeAndModeloAndMarca(produtoRequest.getNome(), produtoRequest.getModelo(), produtoRequest.getMarca())) throw new ResourceExistsException("Já existe esse produto no sistema");
+
+        ProdutoModelResource produtoResource = new ProdutoModelResource(produtoRequest.getNome(), produtoRequest.getMarca(), produtoRequest.getModelo(), produtoRequest.getPreco(), produtoRequest.getEstoque());
+        repository.save(produtoResource);
+
+        return this.produtoParaResposta(produtoResource);
+    }
+
     //Métodos Auxiliares
 
     private ProdutoModelResource obterProduto(String id){
@@ -61,7 +72,4 @@ public class ProdutoService {
                 produtoResource.getEstoque());
     }
 
-    public ProdutoModelResponse createProduto(ProdutoModelRequest produtoRequest) {
-        return null;
-    }
 }
