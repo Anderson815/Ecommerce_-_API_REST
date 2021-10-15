@@ -37,14 +37,14 @@ public class ProdutoServiceTest {
 
     @BeforeEach
     public void produtoResource(){
-        this.produtoResource = new ProdutoModelResource();
-        this.produtoResource.setId("a");
-        this.produtoResource.setNome("celular");
-        this.produtoResource.setMarca("SAMSUNG");
-        this.produtoResource.setModelo("XLT3");
-        this.produtoResource.setPreco(new BigDecimal("1500.00"));
-        this.produtoResource.setEstoque(50);
-        this.produtoResource.setItens(null);
+        this.produtoResource = new ProdutoModelResource("celular", "SAMSUNG", "XLT3", new BigDecimal("1500.00"), 50);
+//        this.produtoResource.setId("a");
+//        this.produtoResource.setNome("celular");
+//        this.produtoResource.setMarca("SAMSUNG");
+//        this.produtoResource.setModelo("XLT3");
+//        this.produtoResource.setPreco(new BigDecimal("1500.00"));
+//        this.produtoResource.setEstoque(50);
+//        this.produtoResource.setItens(null);
     }
 
     //Testes do método getProduto()
@@ -98,35 +98,35 @@ public class ProdutoServiceTest {
 
 
         //Recursos
-        ProdutoModelResource produtoResource1 = new ProdutoModelResource();
+        ProdutoModelResource produtoResource1 = new ProdutoModelResource("celular", "SAMSUNG", "XLT3", new BigDecimal("1500.00"), 50);
 
-        produtoResource1.setId("a");
-        produtoResource1.setNome("celular");
-        produtoResource1.setMarca("SAMSUNG");
-        produtoResource1.setModelo("XLT3");
-        produtoResource1.setPreco(new BigDecimal("1500.00"));
-        produtoResource1.setEstoque(50);
-        produtoResource1.setItens(null);
+//        produtoResource1.setId("a");
+//        produtoResource1.setNome("celular");
+//        produtoResource1.setMarca("SAMSUNG");
+//        produtoResource1.setModelo("XLT3");
+//        produtoResource1.setPreco(new BigDecimal("1500.00"));
+//        produtoResource1.setEstoque(50);
+//        produtoResource1.setItens(null);
         
-        ProdutoModelResource produtoResource2 = new ProdutoModelResource();
+        ProdutoModelResource produtoResource2 = new ProdutoModelResource("balde", "bbb", "baldão", new BigDecimal("25.84"), 15);
 
-        produtoResource2.setId("b");
-        produtoResource2.setNome("balde");
-        produtoResource2.setMarca("bbb");
-        produtoResource2.setModelo("baldão");
-        produtoResource2.setPreco(new BigDecimal("25.84"));
-        produtoResource2.setEstoque(15);
-        produtoResource2.setItens(null);
+//        produtoResource2.setId("b");
+//        produtoResource2.setNome("balde");
+//        produtoResource2.setMarca("bbb");
+//        produtoResource2.setModelo("baldão");
+//        produtoResource2.setPreco(new BigDecimal("25.84"));
+//        produtoResource2.setEstoque(15);
+//        produtoResource2.setItens(null);
         
-        ProdutoModelResource produtoResource3 = new ProdutoModelResource();
+        ProdutoModelResource produtoResource3 = new ProdutoModelResource("computador", "lenovo", "PC_DA_NASA", new BigDecimal("5450.99"), 4);
 
-        produtoResource3.setId("c");
-        produtoResource3.setNome("computador");
-        produtoResource3.setMarca("lenovo");
-        produtoResource3.setModelo("PC_DA_NASA");
-        produtoResource3.setPreco(new BigDecimal("5450.99"));
-        produtoResource3.setEstoque(4);
-        produtoResource3.setItens(null);
+//        produtoResource3.setId("c");
+//        produtoResource3.setNome("computador");
+//        produtoResource3.setMarca("lenovo");
+//        produtoResource3.setModelo("PC_DA_NASA");
+//        produtoResource3.setPreco(new BigDecimal("5450.99"));
+//        produtoResource3.setEstoque(4);
+//        produtoResource3.setItens(null);
         
         List<ProdutoModelResource> listaResource = new ArrayList<>();
         listaResource.add(produtoResource1);
@@ -229,7 +229,7 @@ public class ProdutoServiceTest {
         ProdutoModelRequest produtoRequest = new ProdutoModelRequest("celular", "SAMSUNG", "XLT3", new BigDecimal("1500.00"), 50);
 
         //Simulação
-        when(produtoRepository.existsByNomeAndModeloAndMarca(produtoRequest.getNome(), produtoRequest.getModelo(), produtoRequest.getModelo()))
+        when(produtoRepository.existsByNomeAndModeloAndMarca(produtoRequest.getNome(), produtoRequest.getModelo(), produtoRequest.getMarca()))
                 .thenReturn(true);
 
         //Teste
