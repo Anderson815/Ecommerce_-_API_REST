@@ -3,6 +3,7 @@ package com.anderson.ecommerce.model.resource;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "produto")
@@ -25,14 +26,27 @@ public class ProdutoModelResource {
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
     private List<ItemModelResource> itens;
 
+    public ProdutoModelResource(String nome, String marca, String modelo, BigDecimal preco, int estoque) {
+
+        this.setId();
+
+        this.nome = nome;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.preco = preco;
+        this.estoque = estoque;
+
+        this.itens = null;
+    }
+
     //Get e Set
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    private void setId() {
+        this.id = UUID.randomUUID().toString();
     }
 
     public String getNome() {
